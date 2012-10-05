@@ -170,11 +170,14 @@ App.KeywordsView = Backbone.View.extend({
         this.keywords = options.list;
         this.input = this.$('.keyword');
         this.keywords.bind('add', this.add, this);
-        this.keywords.bind('all', this.render, this);
+        this.keywords.bind('reset', this.reset, this);
     },
     add: function(keyword) {
         var view = new App.KeywordView({model: keyword});
         this.$('#keyword-list').append(view.render().el);
+    },
+    reset: function() {
+        this.$('#keyword-list').empty();
     },
     createOnEnter: function(e) {
         if (e.keyCode != 13) return;
@@ -209,6 +212,13 @@ function onDomReady() {
     App.keywordsView = new App.KeywordsView({
         model: App.model,
         list: App.keywordList
+    });
+
+    $('#reset').click(function() {
+        App.originalTab.text.val('');
+        App.originalTab.activate();
+        App.originalTab.text.focus();
+        App.keywordList.reset();
     });
 
     // other initialization
