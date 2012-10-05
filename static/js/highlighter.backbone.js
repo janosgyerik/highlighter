@@ -55,49 +55,14 @@ App.Tab = Backbone.View.extend({
 
 App.OriginalTab = App.Tab.extend({
     initialize: function() {
-        this.lat = this.$('.lat');
+        this.text = this.$('.text');
     },
-    fieldToFocus: this.$('.lat'),
+    fieldToFocus: this.$('.text'),
     events: {
-        'click .btn-goto': 'gotoLatLon',
-        'click .btn-pin':  'dropPin',
-        'click .btn-here': 'getCurrentLatLon',
-        'click .btn-home': 'gotoHome',
-        'keypress .lat': 'onEnter',
-        'keypress .lon': 'onEnter'
+        'blur .text': 'onTextChanged'
     },
-    gotoLatLon: function() {
-        var lat = this.lat.val();
-        var lon = this.lon.val();
-        if (lat && lon) {
-            this.map.trigger('gotoLatLon', lat, lon);
-        }
-    },
-    dropPin: function() {
-        var lat = this.lat.val();
-        var lon = this.lon.val();
-        if (lat && lon) {
-            this.map.trigger('gotoLatLon', lat, lon);
-            this.map.trigger('dropPin', lat, lon);
-        }
-    },
-    getCurrentLatLon: function() {
-        var lat = this.lat;
-        var lon = this.lon;
-        var callback = function(lat_, lon_) {
-            lat.val(lat_);
-            lon.val(lon_);
-        };
-        this.map.trigger('getCurrentLatLon', callback);
-    },
-    gotoHome: function() {
-        this.map.trigger('gotoHome');
-    },
-    onEnter: function(e) {
-        if (e.keyCode == '13') {
-            e.preventDefault();
-            this.gotoLatLon();
-        }
+    onTextChanged: function() {
+        this.model.set({original: this.text.val()});
     }
 });
 
@@ -141,22 +106,13 @@ function onDomReady() {
 
     // debugging
     App.highlightedTab.activate();
-    //App.localSearchTool.keyword.val('pizza');
-    //App.localSearchTool.localSearch();
 
-    //App.geocodeTool.activate();
-    //App.geocodeTool.address.val('6 Rue Mizon, 75015 Paris, France');
-    //App.geocodeTool.geocode();
+    App.originalTab.text.text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
+    App.originalTab.text.blur();
 
-    // this is to force all views to render
-    //App.mapController.trigger('change');
-
-    $('.keyword').val('lorem');
-    $('.orig').text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
-    App.model.set({original: $('.orig').text()});
     App.model.set({keywords: ['lorem', 'ipsum']});
     var hh = App.model.getHighlighted();
-    $('.highlighted').html(hh);
+    $('.html').html(hh);
 }
 
 $(function() {
