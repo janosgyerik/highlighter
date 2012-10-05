@@ -23,10 +23,12 @@ App.Model = Backbone.Model.extend({
     defaults: {
         original: '',
         keywords: [],
-        words: {}
+        words: {},
+        highlighted: ''
     },
     initialize: function() {
         this.on('change:original', this.onOriginalUpdated, this);
+        this.on('change:keywords', this.onKeywordsUpdated, this);
     },
     onOriginalUpdated: function() {
         var words = {};
@@ -35,13 +37,13 @@ App.Model = Backbone.Model.extend({
         });
         this.set({words: words});
     },
-    getHighlighted: function() {
+    onKeywordsUpdated: function() {
         var highlighted = this.get('original');
         _.each(this.get('keywords'), function(keyword) {
             var pattern = '\\b' + keyword;
             highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<b>' + keyword + '</b>');
         });
-        return highlighted;
+        this.set({highlighted: highlighted});
     },
     getCount: function(word) {
         return this.get('words')[word] || 0;
@@ -70,25 +72,13 @@ App.OriginalTab = App.Tab.extend({
 });
 
 App.HighlightedTab = App.Tab.extend({
+    template: _.template($('#highlighted-template').html()),
     initialize: function() {
-        this.address = this.$('.address');
+        this.model.bind('change:highlighted', this.render, this);
     },
-    fieldToFocus: this.$('.address'),
-    events: {
-        'click .btn-geocode': 'geocode',
-        'keypress .address': 'onEnter'
-    },
-    geocode: function() {
-        var address = this.address.val();
-        if (address) {
-            this.map.trigger('geocode', address);
-        }
-    },
-    onEnter: function(e) {
-        if (e.keyCode == '13') {
-            e.preventDefault();
-            this.geocode();
-        }
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
     }
 });
 
@@ -146,7 +136,16 @@ App.Keyword = Backbone.Model.extend({
 });
 
 App.KeywordList = Backbone.Collection.extend({
-    model: App.Keyword
+    model: App.Keyword,
+    initialize: function() {
+        this.on('add', this.onChange, this);
+        this.on('remove', this.onChange, this);
+    },
+    onChange: function() {
+        var keywords = this.pluck('keyword');
+        console.log(keywords);
+        App.model.set({keywords: keywords});
+    }
 });
 
 App.KeywordsView = Backbone.View.extend({
@@ -206,11 +205,6 @@ function onDomReady() {
     App.originalTab.text.text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
     App.originalTab.text.blur();
 
-    App.model.set({keywords: ['lorem', 'ipsum', 'Excepteur']});
-    var hh = App.model.getHighlighted();
-    $('.html').html(hh);
-
-    App.keywordsView.create('lorem');
     App.keywordsView.create('dolor');
 }
 
