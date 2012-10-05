@@ -67,8 +67,9 @@
                         <div class="span10">
                             <input type="text" placeholder="enter keyword..." class="keyword">
                         </div>
-                        <div class="span2"><span class="badge">3</span></div>
                     </div>
+                    <ul id="keyword-list" class="unstyled">
+                    </ul>
                 </div>
             </div>
           </div><!--/.tabbable -->
@@ -106,10 +107,11 @@
 <!-- TODO: this should be moved to a file to serve via CDN -->
 <script type="text/template" id="keyword-template">
     <div class="view">
-      <label><%- keyword %></label>
-      <a class="destroy"></a>
+        <span><%- keyword %></span>
+        <span class="badge pull-right"><%- count %></span>
+        <a class="destroy"></a>
     </div>
-    <input class="edit" type="text" value="<%= title %>" />
+    <input class="edit" type="text" value="<%= keyword %>" />
 </script>
 
     <!-- Le javascript

@@ -13,7 +13,7 @@
 // TODO: put in app.js
 window.App = {};
 
-_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+//_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
 // classes
 // TODO: put in app/*.js
@@ -43,6 +43,9 @@ App.Model = Backbone.Model.extend({
             highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<b>' + keyword + '</b>');
         });
         return highlighted;
+    },
+    getCount: function(word) {
+        return this.get('words')[word] || 0;
     }
 });
 
@@ -93,7 +96,88 @@ App.HighlightedTab = App.Tab.extend({
 App.KeywordView = Backbone.View.extend({
     tagName: 'li',
     template: _.template($('#keyword-template').html()),
+    events: {
+        'dblclick .view': 'edit',
+        'click a.destroy': 'clear',
+        'keypress .edit': 'updateOnEnter',
+        'blur .edit': 'close'
+    },
+    initialize: function() {
+        this.model.bind('change', this.render, this);
+        this.model.bind('destroy', this.remove, this);
+    },
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        this.input = this.$('.edit');
+        return this;
+    },
+    edit: function() {
+        this.$el.addClass('editing');
+        this.input.focus();
+    },
+    close: function() {
+        var value = this.input.val();
+        if (!value) this.clear();
+        this.model.set({keyword: value});
+        this.$el.removeClass('editing');
+    },
+    updateOnEnter: function(e) {
+        if (e.keyCode == 13) this.close();
+    },
+    clear: function() {
+        this.model.clear();
+    }
+});
 
+App.Keyword = Backbone.Model.extend({
+    defaults: function() {
+        return {
+            keyword: 'empty keyword...',
+            count: 0
+        };
+    },
+    initialize: function() {
+        if (!this.get('keyword')) {
+            this.set({title: this.defaults.title});
+        }
+    },
+    clear: function() {
+        this.destroy();
+    }
+});
+
+App.KeywordList = Backbone.Collection.extend({
+    model: App.Keyword
+});
+
+App.KeywordsView = Backbone.View.extend({
+    el: '#keywords',
+    events: {
+        'keypress .keyword': 'createOnEnter'
+    },
+    initialize: function(options) {
+        this.keywords = options.list;
+        this.input = this.$('.keyword');
+        this.keywords.bind('add', this.add, this);
+        this.keywords.bind('all', this.render, this);
+    },
+    add: function(keyword) {
+        var view = new App.KeywordView({model: keyword});
+        this.$('#keyword-list').append(view.render().el);
+    },
+    createOnEnter: function(e) {
+        if (e.keyCode != 13) return;
+        if (!this.input.val()) return;
+        var keyword = this.input.val();
+        this.create(keyword);
+        this.input.val('');
+    },
+    create: function(keyword) {
+        var count = this.model.getCount(keyword);
+        var obj = new App.Keyword({keyword: keyword, count: count});
+        this.keywords.add(obj);
+        console.log(this.keywords.all);
+    }
 });
 
 function onDomReady() {
@@ -111,6 +195,13 @@ function onDomReady() {
         model: App.model
     });
 
+    App.keywordList = new App.KeywordList();
+    App.keywordsView = new App.KeywordsView({
+        model: App.model,
+        list: App.keywordList
+    });
+    App.keywordsView.input.focus();
+
     // debugging
     App.highlightedTab.activate();
 
@@ -121,15 +212,8 @@ function onDomReady() {
     var hh = App.model.getHighlighted();
     $('.html').html(hh);
 
-    /*
-    $('.keyword').bind('change', function() {
-        App.model.set({keywords: [$(this).val()]});
-        var hh = App.model.getHighlighted();
-        $('.html').html(hh);
-    });
-    $('.keyword').val('ui');
-    $('.keyword').change();
-    */
+    App.keywordsView.create('lorem');
+    App.keywordsView.create('dolor');
 }
 
 $(function() {
