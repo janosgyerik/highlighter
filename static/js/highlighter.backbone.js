@@ -30,20 +30,29 @@ App.Model = Backbone.Model.extend({
         this.on('change:original', this.onOriginalUpdated, this);
         this.on('change:keywords', this.onKeywordsUpdated, this);
     },
-    onOriginalUpdated: function() {
+    updateWords: function() {
         var words = {};
         _.each(this.get('original').split(/\W+/), function(word) {
             words[word] = (words[word] || 0) + 1;
         });
         this.set({words: words});
     },
-    onKeywordsUpdated: function() {
+    updateHighlighted: function() {
         var highlighted = this.get('original');
         _.each(this.get('keywords'), function(keyword) {
             var pattern = '\\b' + keyword;
             highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<b>' + keyword + '</b>');
         });
         this.set({highlighted: highlighted});
+    },
+    onOriginalUpdated: function() {
+        console.log('++onOriginalUpdated');
+        this.updateWords();
+        this.updateHighlighted();
+    },
+    onKeywordsUpdated: function() {
+        console.log('++onKeywordsUpdated');
+        this.updateHighlighted();
     },
     getCount: function(word) {
         return this.get('words')[word] || 0;
@@ -197,15 +206,14 @@ function onDomReady() {
         model: App.model,
         list: App.keywordList
     });
+
+    // other initialization
     App.keywordsView.input.focus();
+    App.model.set({original: App.originalTab.text.text()});
 
     // debugging
-    App.highlightedTab.activate();
-
-    App.originalTab.text.text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
-    App.originalTab.text.blur();
-
-    App.keywordsView.create('dolor');
+    //App.highlightedTab.activate();
+    //App.keywordsView.create('dolor');
 }
 
 $(function() {
