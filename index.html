@@ -104,9 +104,12 @@
     </div><!--/.fluid-container-->
 
 <!-- TODO: this should be moved to a file to serve via CDN -->
-<script type="text/template" id="mapinfo-details-template">
+<script type="text/template" id="keyword-template">
     <div class="view">
+      <label><%- keyword %></label>
+      <a class="destroy"></a>
     </div>
+    <input class="edit" type="text" value="<%= title %>" />
 </script>
 
     <!-- Le javascript

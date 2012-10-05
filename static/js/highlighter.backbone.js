@@ -39,7 +39,8 @@ App.Model = Backbone.Model.extend({
     getHighlighted: function() {
         var highlighted = this.get('original');
         _.each(this.get('keywords'), function(keyword) {
-            highlighted = highlighted.replace(new RegExp(keyword, 'gi'), '<b>' + keyword + '</b>');
+            var pattern = '\\b' + keyword;
+            highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<b>' + keyword + '</b>');
         });
         return highlighted;
     }
@@ -89,6 +90,12 @@ App.HighlightedTab = App.Tab.extend({
     }
 });
 
+App.KeywordView = Backbone.View.extend({
+    tagName: 'li',
+    template: _.template($('#keyword-template').html()),
+
+});
+
 function onDomReady() {
     // instances
     // TODO: put in setup.js
@@ -110,9 +117,19 @@ function onDomReady() {
     App.originalTab.text.text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
     App.originalTab.text.blur();
 
-    App.model.set({keywords: ['lorem', 'ipsum']});
+    App.model.set({keywords: ['lorem', 'ipsum', 'Excepteur']});
     var hh = App.model.getHighlighted();
     $('.html').html(hh);
+
+    /*
+    $('.keyword').bind('change', function() {
+        App.model.set({keywords: [$(this).val()]});
+        var hh = App.model.getHighlighted();
+        $('.html').html(hh);
+    });
+    $('.keyword').val('ui');
+    $('.keyword').change();
+    */
 }
 
 $(function() {
