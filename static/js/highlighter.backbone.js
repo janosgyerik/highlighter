@@ -49,12 +49,10 @@ App.Model = Backbone.Model.extend({
         this.set({highlighted: highlighted});
     },
     onOriginalUpdated: function() {
-        console.log('++onOriginalUpdated');
         this.updateWords();
         this.updateHighlighted();
     },
     onKeywordsUpdated: function() {
-        console.log('++onKeywordsUpdated');
         this.updateHighlighted();
     },
     getCount: function(word) {
@@ -139,9 +137,12 @@ App.Keyword = Backbone.Model.extend({
         };
     },
     initialize: function() {
-        if (!this.get('keyword')) {
-            this.set({title: this.defaults.title});
-        }
+        App.model.on('change:words', this.refreshCount, this);
+        this.refreshCount();
+    },
+    refreshCount: function() {
+        var keyword = this.get('keyword');
+        this.set({count: App.model.getCount(keyword)});
     },
     clear: function() {
         this.destroy();
@@ -187,8 +188,7 @@ App.KeywordsView = Backbone.View.extend({
         this.input.val('');
     },
     create: function(keyword) {
-        var count = this.model.getCount(keyword);
-        var obj = new App.Keyword({keyword: keyword, count: count});
+        var obj = new App.Keyword({keyword: keyword});
         this.keywords.add(obj);
     }
 });
