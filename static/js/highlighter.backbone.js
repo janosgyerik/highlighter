@@ -29,7 +29,6 @@ App.Model = Backbone.Model.extend({
         this.on('change:original', this.onOriginalUpdated, this);
     },
     onOriginalUpdated: function() {
-        console.log('debug: onOriginalUpdated');
         var words = {};
         _.each(this.get('original').split(/\W+/), function(word) {
             words[word] = (words[word] || 0) + 1;
@@ -176,7 +175,6 @@ App.KeywordsView = Backbone.View.extend({
         var count = this.model.getCount(keyword);
         var obj = new App.Keyword({keyword: keyword, count: count});
         this.keywords.add(obj);
-        console.log(this.keywords.all);
     }
 });
 
