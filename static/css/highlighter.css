@@ -34,31 +34,75 @@ pre.highlighted em.h2 {
 }
 
 pre.highlighted em.h3 {
-    background-color: #f90;
+    background-color: #9c0;
 }
 
 pre.highlighted em.h4 {
-    background-color: #360;
+    background-color: #c90;
 }
 
 pre.highlighted em.h5 {
-    background-color: #c30;
+    background-color: #f60;
 }
 
 pre.highlighted em.h6 {
-    background-color: #369;
+    background-color: #699;
 }
 
 pre.highlighted em.h7 {
-    background-color: #909;
+    background-color: #0f6;
 }
 
 pre.highlighted em.h8 {
-    background-color: #f99;
+    background-color: #3c6;
 }
 
 pre.highlighted em.h9 {
-    background-color: #00f;
+    background-color: #696;
+}
+
+pre.highlighted em.h10 {
+    background-color: #f96;
+}
+
+pre.highlighted em.h11 {
+    background-color: #c36;
+}
+
+pre.highlighted em.h12 {
+    background-color: #f06;
+}
+
+pre.highlighted em.h13 {
+    background-color: #0fc;
+}
+
+pre.highlighted em.h14 {
+    background-color: #3cc;
+}
+
+pre.highlighted em.h15 {
+    background-color: #69c;
+}
+
+pre.highlighted em.h16 {
+    background-color: #96c;
+}
+
+pre.highlighted em.h17 {
+    background-color: #c3c;
+}
+
+pre.highlighted em.h18 {
+    background-color: #f0c;
+}
+
+pre.highlighted em.h19 {
+    background-color: #ccc;
+}
+
+pre.highlighted em.h20 {
+    background-color: #999;
 }
 
 /* eof */
