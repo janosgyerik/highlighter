@@ -33,6 +33,7 @@ App.Model = Backbone.Model.extend({
     updateWords: function() {
         var words = {};
         _.each(this.get('original').split(/\W+/), function(word) {
+            word = word.toLowerCase();
             words[word] = (words[word] || 0) + 1;
         });
         this.set({words: words});
@@ -57,6 +58,7 @@ App.Model = Backbone.Model.extend({
         this.updateHighlighted();
     },
     getCount: function(word) {
+        word = word.toLowerCase();
         return this.get('words')[word] || 0;
     }
 });
