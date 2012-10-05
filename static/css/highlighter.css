@@ -16,5 +16,9 @@
     display: none;
 }
 
+#keyword-list .keyword {
+    font-size: large;
+}
+
 
 /* eof */
