@@ -20,5 +20,45 @@
     font-size: large;
 }
 
+pre.highlighted em {
+    font-style: normal;
+    background-color: #f00;
+}
+
+pre.highlighted em.h1 {
+    background-color: #ff0;
+}
+
+pre.highlighted em.h2 {
+    background-color: #6f0;
+}
+
+pre.highlighted em.h3 {
+    background-color: #f90;
+}
+
+pre.highlighted em.h4 {
+    background-color: #360;
+}
+
+pre.highlighted em.h5 {
+    background-color: #c30;
+}
+
+pre.highlighted em.h6 {
+    background-color: #369;
+}
+
+pre.highlighted em.h7 {
+    background-color: #909;
+}
+
+pre.highlighted em.h8 {
+    background-color: #f99;
+}
+
+pre.highlighted em.h9 {
+    background-color: #00f;
+}
 
 /* eof */

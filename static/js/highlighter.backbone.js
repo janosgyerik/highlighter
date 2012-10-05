@@ -39,9 +39,11 @@ App.Model = Backbone.Model.extend({
     },
     updateHighlighted: function() {
         var highlighted = this.get('original');
+        var cnt = 1;
         _.each(this.get('keywords'), function(keyword) {
             var pattern = '\\b' + keyword;
-            highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<b>' + keyword + '</b>');
+            var cname = 'h' + cnt++;
+            highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<em class="' + cname + '">' + keyword + '</em>');
         });
         this.set({highlighted: highlighted});
     },
@@ -213,7 +215,14 @@ function onDomReady() {
 
     // debugging
     //App.highlightedTab.activate();
+    //App.keywordsView.create('lorem');
+    //App.keywordsView.create('ipsum');
     //App.keywordsView.create('dolor');
+    //App.keywordsView.create('sit');
+    //App.keywordsView.create('amet');
+    //App.keywordsView.create('consec');
+    //App.keywordsView.create('adip');
+    //App.keywordsView.create('elit');
 }
 
 $(function() {
