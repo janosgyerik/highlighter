@@ -152,8 +152,8 @@ App.KeywordList = Backbone.Collection.extend({
     },
     onChange: function() {
         var keywords = this.pluck('keyword');
-        console.log(keywords);
         App.model.set({keywords: keywords});
+        App.highlightedTab.activate();
     }
 });
 
