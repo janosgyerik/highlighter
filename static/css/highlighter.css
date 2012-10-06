@@ -20,6 +20,22 @@
     font-size: larger;
 }
 
+.destroy {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: url(../images/destroy.png) no-repeat center center;
+    display: block;
+}
+
+#keyword-list .destroy {
+    display: none;
+}
+
+#keyword-list tr:hover .destroy {
+    display: block;
+}
+
 .highlighted {
     white-space: pre-wrap;
 }
