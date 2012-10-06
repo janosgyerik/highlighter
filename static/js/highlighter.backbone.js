@@ -155,6 +155,7 @@ App.KeywordList = Backbone.Collection.extend({
     initialize: function() {
         this.on('add', this.onChange, this);
         this.on('remove', this.onChange, this);
+        this.on('reset', this.onChange, this);
     },
     onChange: function() {
         var keywords = this.pluck('keyword');
@@ -166,7 +167,8 @@ App.KeywordList = Backbone.Collection.extend({
 App.KeywordsView = Backbone.View.extend({
     el: '#keywords',
     events: {
-        'keypress .keyword': 'createOnEnter'
+        'keypress .keyword': 'createOnEnter',
+        'click a.destroy': 'clear'
     },
     initialize: function(options) {
         this.keywords = options.list;
@@ -192,6 +194,9 @@ App.KeywordsView = Backbone.View.extend({
         var index = this.keywords.length + 1;
         var obj = new App.Keyword({keyword: keyword, index: index});
         this.keywords.add(obj);
+    },
+    clear: function() {
+        this.keywords.reset();
     }
 });
 
@@ -217,10 +222,10 @@ function onDomReady() {
     });
 
     $('#reset').click(function() {
+        App.keywordList.reset();
         App.originalTab.text.val('');
         App.originalTab.activate();
         App.originalTab.text.focus();
-        App.keywordList.reset();
     });
 
     // other initialization
@@ -229,9 +234,10 @@ function onDomReady() {
 
     // debugging
     //App.highlightedTab.activate();
-    App.keywordsView.create('lorem');
-    App.keywordsView.create('ipsum');
-    App.keywordsView.create('dolor');
+    //App.keywordsView.create('lorem');
+    //App.keywordsView.create('ipsum');
+    //App.keywordsView.create('dolor');
+    //App.keywordsView.clear();
     //App.keywordsView.create('sit');
     //App.keywordsView.create('amet');
     //App.keywordsView.create('consec');
