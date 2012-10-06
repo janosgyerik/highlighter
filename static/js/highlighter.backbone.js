@@ -234,9 +234,9 @@ function onDomReady() {
 
     // debugging
     //App.highlightedTab.activate();
-    //App.keywordsView.create('lorem');
-    //App.keywordsView.create('ipsum');
-    //App.keywordsView.create('dolor');
+    App.keywordsView.create('lorem');
+    App.keywordsView.create('ipsum');
+    App.keywordsView.create('dolor');
     //App.keywordsView.clear();
     //App.keywordsView.create('sit');
     //App.keywordsView.create('amet');
