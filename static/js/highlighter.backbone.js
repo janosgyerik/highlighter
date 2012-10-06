@@ -57,7 +57,8 @@ App.Model = Backbone.Model.extend({
     },
     getCount: function(word) {
         var pattern = '\\b' + word;
-        return this.get('original').match(new RegExp(pattern, 'gi')).length;
+        var matches = this.get('original').match(new RegExp(pattern, 'gi'));
+        return matches ? matches.length : 0;
     }
 });
 
@@ -152,6 +153,7 @@ App.Keyword = Backbone.Model.extend({
 
 App.KeywordList = Backbone.Collection.extend({
     model: App.Keyword,
+    localStorage: new Store('highlighter-backbone'),
     initialize: function() {
         this.on('add', this.onChange, this);
         this.on('remove', this.onChange, this);
@@ -175,6 +177,15 @@ App.KeywordsView = Backbone.View.extend({
         this.input = this.$('.keyword');
         this.keywords.bind('add', this.add, this);
         this.keywords.bind('reset', this.reset, this);
+        this.keywords.fetch();
+        if (this.keywords.length) {
+            this.keywords.each(this.add);
+        }
+        else {
+            this.create('lorem');
+            this.create('ipsum');
+            this.create('dolor');
+        }
     },
     add: function(keyword) {
         var view = new App.KeywordView({model: keyword});
@@ -192,11 +203,16 @@ App.KeywordsView = Backbone.View.extend({
     },
     create: function(keyword) {
         var index = this.keywords.length + 1;
-        var obj = new App.Keyword({keyword: keyword, index: index});
-        this.keywords.add(obj);
+        this.keywords.create({keyword: keyword, index: index});
     },
     clear: function() {
-        this.keywords.reset();
+        // todo: isn't there a better way?
+        var i = 0;
+        var maxiter = 10;
+        while (true) {
+            this.keywords.invoke('destroy');
+            if (!this.keywords.length || ++i > maxiter) break;
+        }
     }
 });
 
@@ -234,9 +250,9 @@ function onDomReady() {
 
     // debugging
     //App.highlightedTab.activate();
-    App.keywordsView.create('lorem');
-    App.keywordsView.create('ipsum');
-    App.keywordsView.create('dolor');
+    //App.keywordsView.create('lorem');
+    //App.keywordsView.create('ipsum');
+    //App.keywordsView.create('dolor');
     //App.keywordsView.clear();
     //App.keywordsView.create('sit');
     //App.keywordsView.create('amet');
