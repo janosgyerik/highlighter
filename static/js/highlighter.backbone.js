@@ -168,7 +168,7 @@ App.KeywordsView = Backbone.View.extend({
     el: '#keywords',
     events: {
         'keypress .keyword': 'createOnEnter',
-        'click a.destroy': 'clear'
+        'click th a.destroy': 'clear'
     },
     initialize: function(options) {
         this.keywords = options.list;
