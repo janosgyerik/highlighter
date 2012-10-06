@@ -56,8 +56,8 @@ App.Model = Backbone.Model.extend({
         this.updateHighlighted();
     },
     getCount: function(word) {
-        word = word.toLowerCase();
-        return this.get('words')[word] || 0;
+        var pattern = '\\b' + word;
+        return this.get('original').match(new RegExp(pattern, 'gi')).length;
     }
 });
 
