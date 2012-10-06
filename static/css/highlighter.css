@@ -17,91 +17,96 @@
 }
 
 #keyword-list .keyword {
-    font-size: large;
+    font-size: larger;
 }
 
-pre.highlighted em {
+.highlighted {
+    white-space: pre-wrap;
+}
+
+.hlt {
     font-style: normal;
     background-color: #f00;
+    color: black;
 }
 
-pre.highlighted em.h1 {
+.hlt1 {
     background-color: #ff0;
 }
 
-pre.highlighted em.h2 {
+.hlt2 {
     background-color: #6f0;
 }
 
-pre.highlighted em.h3 {
+.hlt3 {
     background-color: #9c0;
 }
 
-pre.highlighted em.h4 {
+.hlt4 {
     background-color: #c90;
 }
 
-pre.highlighted em.h5 {
+.hlt5 {
     background-color: #f60;
 }
 
-pre.highlighted em.h6 {
+.hlt6 {
     background-color: #699;
 }
 
-pre.highlighted em.h7 {
+.hlt7 {
     background-color: #0f6;
 }
 
-pre.highlighted em.h8 {
+.hlt8 {
     background-color: #3c6;
 }
 
-pre.highlighted em.h9 {
+.hlt9 {
     background-color: #696;
 }
 
-pre.highlighted em.h10 {
+.hlt10 {
     background-color: #f96;
 }
 
-pre.highlighted em.h11 {
+.hlt11 {
     background-color: #c36;
 }
 
-pre.highlighted em.h12 {
+.hlt12 {
     background-color: #f06;
 }
 
-pre.highlighted em.h13 {
+.hlt13 {
     background-color: #0fc;
 }
 
-pre.highlighted em.h14 {
+.hlt14 {
     background-color: #3cc;
 }
 
-pre.highlighted em.h15 {
+.hlt15 {
     background-color: #69c;
 }
 
-pre.highlighted em.h16 {
+.hlt16 {
     background-color: #96c;
 }
 
-pre.highlighted em.h17 {
+.hlt17 {
     background-color: #c3c;
 }
 
-pre.highlighted em.h18 {
+.hlt18 {
     background-color: #f0c;
 }
 
-pre.highlighted em.h19 {
+.hlt19 {
     background-color: #ccc;
 }
 
-pre.highlighted em.h20 {
+.hlt20 {
     background-color: #999;
 }
 

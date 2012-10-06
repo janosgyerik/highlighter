@@ -43,8 +43,8 @@ App.Model = Backbone.Model.extend({
         var cnt = 1;
         _.each(this.get('keywords'), function(keyword) {
             var pattern = '\\b' + keyword;
-            var cname = 'h' + cnt++;
-            highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<em class="' + cname + '">' + keyword + '</em>');
+            var cname = 'hlt' + cnt++;
+            highlighted = highlighted.replace(new RegExp(pattern, 'gi'), '<span class="' + cname + '">' + keyword + '</span>');
         });
         this.set({highlighted: highlighted});
     },
@@ -94,7 +94,7 @@ App.HighlightedTab = App.Tab.extend({
 });
 
 App.KeywordView = Backbone.View.extend({
-    tagName: 'li',
+    tagName: 'tr',
     template: _.template($('#keyword-template').html()),
     events: {
         'dblclick .view': 'edit',
@@ -133,7 +133,8 @@ App.Keyword = Backbone.Model.extend({
     defaults: function() {
         return {
             keyword: 'empty keyword...',
-            count: 0
+            count: 0,
+            index: 1
         };
     },
     initialize: function() {
@@ -188,7 +189,8 @@ App.KeywordsView = Backbone.View.extend({
         this.input.val('');
     },
     create: function(keyword) {
-        var obj = new App.Keyword({keyword: keyword});
+        var index = this.keywords.length + 1;
+        var obj = new App.Keyword({keyword: keyword, index: index});
         this.keywords.add(obj);
     }
 });
@@ -227,9 +229,9 @@ function onDomReady() {
 
     // debugging
     //App.highlightedTab.activate();
-    //App.keywordsView.create('lorem');
-    //App.keywordsView.create('ipsum');
-    //App.keywordsView.create('dolor');
+    App.keywordsView.create('lorem');
+    App.keywordsView.create('ipsum');
+    App.keywordsView.create('dolor');
     //App.keywordsView.create('sit');
     //App.keywordsView.create('amet');
     //App.keywordsView.create('consec');

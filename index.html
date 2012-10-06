@@ -67,10 +67,18 @@
                         <div class="span10">
                             <input type="text" placeholder="enter keyword..." class="keyword">
                         </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th class="pull-right">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="keyword-list">
+                            </tbody>
+                        </table>
+                        <button class="btn" id="reset">Reset</button>
                     </div>
-                    <ul id="keyword-list" class="unstyled">
-                    </ul>
-                    <button class="btn" id="reset">Reset</button>
                 </div>
             </div>
           </div><!--/.tabbable -->
@@ -118,17 +126,14 @@ Aenean quis nisi vitae lorem ultricies gravida eget id libero. Aenean purus nequ
 
 <!-- TODO: this should be moved to a file to serve via CDN -->
 <script type="text/template" id="keyword-template">
-    <div class="view">
-        <span class="keyword"><%- keyword %></span>
-        <span class="badge pull-right"><%- count %></span>
-        <a class="destroy"></a>
-    </div>
-    <input class="edit" type="text" value="<%= keyword %>" />
+    <td><span class="badge keyword hlt hlt<%- index %>"><%- keyword %></span></td>
+    <td><span class="badge pull-right hlt hlt<%- index %>"><%- count %></span></td>
+    <td><a class="destroy"></a></td>
 </script>
 
 <script type="text/template" id="highlighted-template">
     <div class="view">
-        <pre class="highlighted"><%= highlighted %></pre>
+        <blockquote class="highlighted"><%= highlighted %></blockquote>
     </div>
 </script>
 
