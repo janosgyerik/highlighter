@@ -72,6 +72,7 @@
                                 <tr>
                                     <th>Keyword</th>
                                     <th class="pull-right">#</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="keyword-list">
@@ -126,14 +127,14 @@ Aenean quis nisi vitae lorem ultricies gravida eget id libero. Aenean purus nequ
 
 <!-- TODO: this should be moved to a file to serve via CDN -->
 <script type="text/template" id="keyword-template">
-    <td><span class="badge keyword hlt hlt<%- index %>"><%- keyword %></span></td>
-    <td><span class="badge pull-right hlt hlt<%- index %>"><%- count %></span></td>
+    <td><span class="badge keyword hlt hlt{{ index }}">{{ keyword }}</span></td>
+    <td><span class="badge pull-right hlt hlt{{ index }}">{{ count }}</span></td>
     <td><a class="destroy"></a></td>
 </script>
 
 <script type="text/template" id="highlighted-template">
     <div class="view">
-        <blockquote class="highlighted"><%= highlighted %></blockquote>
+        <blockquote class="highlighted">{{ highlighted }}</blockquote>
     </div>
 </script>
 

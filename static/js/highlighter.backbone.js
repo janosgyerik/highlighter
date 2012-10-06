@@ -13,7 +13,7 @@
 // TODO: put in app.js
 window.App = {};
 
-//_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
 // classes
 // TODO: put in app/*.js
