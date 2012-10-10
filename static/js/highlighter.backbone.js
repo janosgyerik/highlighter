@@ -39,7 +39,7 @@ App.Model = Backbone.Model.extend({
         this.set({words: words});
     },
     updateHighlighted: function() {
-        var highlighted = this.get('original');
+        var highlighted = this.escape('original');
         var cnt = 1;
         _.each(this.get('keywords'), function(keyword) {
             var pattern = '\\b' + keyword;
