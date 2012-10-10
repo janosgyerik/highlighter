@@ -238,7 +238,7 @@ function onDomReady() {
     });
 
     $('#reset').click(function() {
-        App.keywordList.reset();
+        App.keywordsView.clear();
         App.originalTab.text.val('');
         App.originalTab.activate();
         App.originalTab.text.focus();
