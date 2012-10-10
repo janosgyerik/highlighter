@@ -83,6 +83,24 @@ App.OriginalTab = App.Tab.extend({
     }
 });
 
+jQuery.fn.selectText = function(){
+    var doc = document
+        , element = this[0]
+        , range, selection
+    ;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();        
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+};
+
 App.HighlightedTab = App.Tab.extend({
     template: _.template($('#highlighted-template').html()),
     initialize: function() {
@@ -90,6 +108,10 @@ App.HighlightedTab = App.Tab.extend({
     },
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
+        var element = this.$('.highlighted');
+        this.$('.select').click(function() {
+            element.selectText();
+        });
         return this;
     }
 });
