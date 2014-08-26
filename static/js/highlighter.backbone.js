@@ -1,4 +1,4 @@
-window.App = {};
+var App = window.App = {};
 
 _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
