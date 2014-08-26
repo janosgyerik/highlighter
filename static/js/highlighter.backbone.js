@@ -1,15 +1,3 @@
-/*!
- * highlighter backbone JavaScript Library v0.1
- * http://.../
- *
- * Copyright 2012, Janos Gyerik
- * http://.../license
- *
- * Date: Fri Oct  5 18:56:59 CEST 2012
- */
-
-
-// the basic namespace
 // TODO: put in app.js
 window.App = {};
 
