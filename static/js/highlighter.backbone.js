@@ -1,10 +1,6 @@
-// TODO: put in app.js
 window.App = {};
 
 _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
-
-// classes
-// TODO: put in app/*.js
 
 
 App.Model = Backbone.Model.extend({
@@ -227,8 +223,6 @@ App.KeywordsView = Backbone.View.extend({
 });
 
 function onDomReady() {
-    // instances
-    // TODO: put in setup.js
     App.model = new App.Model();
 
     App.originalTab = new App.OriginalTab({
