@@ -121,12 +121,16 @@ App.KeywordView = Backbone.View.extend({
     },
     close: function () {
         var value = this.input.val();
-        if (!value) this.clear();
+        if (!value) {
+            this.clear();
+        }
         this.model.set({keyword: value});
         this.$el.removeClass('editing');
     },
     updateOnEnter: function (e) {
-        if (e.keyCode == 13) this.close();
+        if (e.keyCode == 13) {
+            this.close();
+        }
     },
     clear: function () {
         this.model.clear();
@@ -198,8 +202,12 @@ App.KeywordsView = Backbone.View.extend({
         this.$('#keyword-list').empty();
     },
     createOnEnter: function (e) {
-        if (e.keyCode != 13) return;
-        if (!this.input.val()) return;
+        if (e.keyCode != 13) {
+            return;
+        }
+        if (!this.input.val()) {
+            return;
+        }
         var keyword = this.input.val();
         this.create(keyword);
         this.input.val('');
@@ -214,7 +222,9 @@ App.KeywordsView = Backbone.View.extend({
         var maxiter = 10;
         while (true) {
             this.keywords.invoke('destroy');
-            if (!this.keywords.length || ++i > maxiter) break;
+            if (!this.keywords.length || ++i > maxiter) {
+                break;
+            }
         }
     }
 });
@@ -278,5 +288,3 @@ function onDomReady() {
 $(function () {
     onDomReady();
 });
-
-// eof
