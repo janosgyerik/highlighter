@@ -67,15 +67,14 @@ App.OriginalTab = App.Tab.extend({
 });
 
 jQuery.fn.selectText = function () {
-    var doc = document;
     var element = this[0];
-    var range, selection;
-    if (doc.body.createTextRange) {
+    var range;
+    if (document.body.createTextRange) {
         range = document.body.createTextRange();
         range.moveToElementText(element);
         range.select();
     } else if (window.getSelection) {
-        selection = window.getSelection();
+        var selection = window.getSelection();
         range = document.createRange();
         range.selectNodeContents(element);
         selection.removeAllRanges();
