@@ -3,11 +3,13 @@ var App = window.App = {};
 _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
 App.Model = Backbone.Model.extend({
-    defaults: {
-        original: '',
-        keywords: [],
-        words: {},
-        highlighted: ''
+    defaults: function () {
+        return {
+            original: '',
+            keywords: [],
+            words: {},
+            highlighted: ''
+        };
     },
     initialize: function () {
         this.on('change:original', this.onOriginalUpdated, this);
